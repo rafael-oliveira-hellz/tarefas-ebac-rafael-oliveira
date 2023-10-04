@@ -1,8 +1,8 @@
-package com.infocaltechnologies;
+package com.ebac;
 
-import com.infocaltechnologies.dao.ClienteMapDAO;
-import com.infocaltechnologies.dao.IClienteDAO;
-import com.infocaltechnologies.domain.Cliente;
+import com.ebac.dao.ClienteMapDAO;
+import com.ebac.dao.IClienteDAO;
+import com.ebac.domain.Cliente;
 
 import javax.swing.*;
 import java.util.Objects;

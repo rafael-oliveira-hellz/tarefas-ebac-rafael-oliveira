@@ -1,4 +1,4 @@
-package com.infocaltechnologies.domain;
+package com.ebac.domain;
 
 import java.util.Objects;
 

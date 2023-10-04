@@ -1,6 +1,6 @@
-package com.infocaltechnologies.dao;
+package com.ebac.dao;
 
-import com.infocaltechnologies.domain.Cliente;
+import com.ebac.domain.Cliente;
 
 import java.util.Collection;
 
