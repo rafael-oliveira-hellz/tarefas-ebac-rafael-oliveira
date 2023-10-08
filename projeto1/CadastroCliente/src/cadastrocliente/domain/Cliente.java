@@ -1,4 +1,4 @@
-package com.ebac.domain;
+package cadastrocliente.domain;
 
 import java.util.Objects;
 

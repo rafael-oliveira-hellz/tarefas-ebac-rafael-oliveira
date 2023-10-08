@@ -44,21 +44,21 @@ public class Main {
            } else if (isOpcaoCadastro(opcao)) {
                String dados = JOptionPane.showInputDialog(null, "Digite os dados do cliente separados por vírgula (nome, CPF, telefone, endereco, numero, bairro, cidade, estado)", "Red Velvet Dinner", JOptionPane.INFORMATION_MESSAGE);
 
-               cadastrar(dados);
+               cadastrar(dados, clienteDAO);
            } else if (isOpcaoConsultar(opcao)) {
                String cpf = JOptionPane.showInputDialog(null, "Digite o CPF do cliente", "Red Velvet Dinner", JOptionPane.INFORMATION_MESSAGE);
 
-               consultar(cpf);
+               consultar(cpf, clienteDAO);
            } else if (isOpcaoAlterar(opcao)) {
                String cpf = JOptionPane.showInputDialog(null, "Digite o CPF do cliente", "Red Velvet Dinner", JOptionPane.INFORMATION_MESSAGE);
 
-               alterar(cpf);
+               alterar(cpf, clienteDAO);
            } else if (isOpcaoExcluir(opcao)) {
                String cpf = JOptionPane.showInputDialog(null, "Digite o CPF do cliente", "Red Velvet Dinner", JOptionPane.INFORMATION_MESSAGE);
 
-               excluir(cpf);
+               excluir(cpf, clienteDAO);
            } else if (isOpcaoBuscarTodos(opcao)) {
-               buscarTodos();
+               buscarTodos(clienteDAO);
            }
 
            opcao = JOptionPane.showInputDialog(null,"""
@@ -72,9 +72,7 @@ public class Main {
        }
     }
 
-    private static void buscarTodos() {
-        IClienteDAO clienteDAO = new ClienteMapDAO();
-
+    private static void buscarTodos(IClienteDAO clienteDAO) {
         StringBuilder clientes = new StringBuilder();
 
         for (Cliente cliente : clienteDAO.buscarTodos()) {
@@ -88,9 +86,7 @@ public class Main {
         return Objects.equals(opcao, "5");
     }
 
-    private static void excluir(String cpf) {
-        IClienteDAO clienteDAO = new ClienteMapDAO();
-
+    private static void excluir(String cpf, IClienteDAO clienteDAO) {
         clienteDAO.excluir(Long.valueOf(cpf));
 
         JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!", "Red Velvet Dinner", JOptionPane.INFORMATION_MESSAGE);
@@ -100,9 +96,7 @@ public class Main {
         return Objects.equals(opcao, "3");
     }
 
-    private static void alterar(String cpf) {
-        IClienteDAO clienteDAO = new ClienteMapDAO();
-
+    private static void alterar(String cpf, IClienteDAO clienteDAO) {
         Cliente cliente = clienteDAO.consultar(Long.valueOf(cpf));
 
         if (cliente != null) {
@@ -138,15 +132,13 @@ public class Main {
         return Objects.equals(opcao, "2");
     }
 
-    private static void consultar(String cpf) {
+    private static void consultar(String cpf, IClienteDAO clienteDAO) {
         String cpfNumerico = cpf.replaceAll("[^0-9]", "");
 
         if (cpfNumerico.length() != 11) {
             JOptionPane.showMessageDialog(null, "CPF inválido!", "Red Velvet Dinner", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-
-        IClienteDAO clienteDAO = new ClienteMapDAO();
 
         Cliente cliente = clienteDAO.consultar(Long.valueOf(cpf));
 
@@ -161,7 +153,7 @@ public class Main {
         return Objects.equals(opcao, "4");
     }
 
-    private static void cadastrar(String dados) {
+    private static void cadastrar(String dados, IClienteDAO clienteDAO) {
         String[] dadosCliente = dados.split(",");
 
         String nome = isValid(dadosCliente, 0) ? dadosCliente[0] : null;
@@ -174,8 +166,6 @@ public class Main {
         String estado = isValid(dadosCliente, 7) ? dadosCliente[7] : null;
 
         Cliente cliente = new Cliente(nome, cpf, telefone, endereco, numero, bairro, cidade, estado);
-
-        IClienteDAO clienteDAO = new ClienteMapDAO();
 
         if (clienteDAO.cadastrar(cliente)) {
             JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!", "Red Velvet Dinner", JOptionPane.INFORMATION_MESSAGE);
